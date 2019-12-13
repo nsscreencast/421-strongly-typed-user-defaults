@@ -8,8 +8,8 @@
 
 import UIKit
 
-extension UserDefaults.Key where Value == Theme {
-    static let theme = UserDefaults.Key<Theme>(name: "theme")
+extension UserDefaults.Key where Value == String {
+    static let theme = UserDefaults.Key<String>(name: "theme")
 }
 
 enum Theme : String {
@@ -27,12 +27,12 @@ class ViewController: UIViewController {
 
     @IBAction func themeChanged(_ sender: UISwitch) {
         let theme: Theme = sender.isOn ? .light : .dark
-        UserDefaults.standard.set(theme, for: .theme)
+        UserDefaults.standard.set(theme.rawValue, for: .theme)
         updateForTheme()
     }
 
     private func updateForTheme() {
-        let isDark = UserDefaults.standard.value(for: .theme) == .dark
+        let isDark = UserDefaults.standard.value(for: .theme) == Theme.dark.rawValue
         themeSwitch.isOn = !isDark
         if isDark {
             view.backgroundColor = UIColor(white: 0.2, alpha: 1.0)
